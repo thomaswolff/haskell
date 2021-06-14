@@ -17,4 +17,4 @@ where `div x y` is defined as integral division, truncated towards negative infi
 == ((2 ^ 2) * (4 ^ 5)) + (1)
 ```
 
-=> På samme måte som man evaluerer multiplikasjoner _før_ man legger sammen ting, evaluerer man eksponenter før man evaluerer multiplikasjoner. Derfor evalueres eksponentene først, deretter multiplikasjonene, og så addisjonene.
+=> På samme måte som man evaluerer multiplikasjon _før_ man legger sammen ting, evaluerer man eksponenter før man evaluerer multiplikasjon. Derfor evalueres eksponentene først, deretter multiplikasjonene, og så addisjonene.
