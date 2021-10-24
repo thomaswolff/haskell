@@ -1,15 +1,13 @@
 # Chapter 10
 
+## foldr
+
+### Implementation
+
 ```haskell
 myFoldr :: (a -> b -> b) -> b -> [a] -> b
 myFoldr f z [] = z
 myFoldr f z (x:xs) = f x (myFoldr f z xs)
-
-myScanr :: (a -> b -> b) -> b -> [a] -> b
-myScanr f z [] = [z]
-myScanr f z (x:xs) = 
-    let nextScanr = myScanr f z xs
-    (f x nextScanr) : [nextScanr]
 
 # f = (++)
 #
@@ -32,27 +30,24 @@ myScanr f z (x:xs) =
 # f "a" "bcz"
 # f "a" "bcz"
 # f "abcz"
+```
 
+### Questions
+
+1. How does the spine for the following expression look?
+
+```haskell
+[1] ++ undefined ++ [2]
+```
+
+## foldl
+
+```haskell
 myFoldl :: (b -> a -> b) -> b -> [a] -> b
 myFoldl f acc [] = acc
 myFoldl f acc (x:xs) = myFoldl f (f acc x) xs
 
-# Alternativ 1
-# myFoldl f "z" ["a", "b", "c"]
-#
-# 1. myFoldl f "z" ("a":["b", "c"]) = myFoldl f (f "z" "a") ["b", "c"]
-#              acc   x :    xs
-#
-# 2. myFoldl f "za" ("b":["c"]) = myFoldl f (f "za" "b") ["c"]
-#              acc    x : xs
-#
-# 3. myFoldl f "zab" ("c":[]) = myFoldl f (f "zab" "c") []
-#               acc    x :xs
-#
-# 4. myFoldl f "zabc" [] = "zabc"
-#               acc
-
-# Alternativ 2
+# foldl - utsetter evaluering av verdiene i ryggraden til den er ferdig med å traversere ryggraden
 # myFoldl f "z" ["a", "b", "c"]
 #
 # 1. myFoldl f "z" ("a":["b", "c"]) = myFoldl f (f "z" "a") ["b", "c"]
@@ -72,4 +67,19 @@ myFoldl f acc (x:xs) = myFoldl f (f acc x) xs
 # f "zab" "c"
 # f "zab" "c"
 # "zabc"
+
+# foldl' - strict evaluation
+# myFoldl f "z" ["a", "b", "c"]
+#
+# 1. myFoldl f "z" ("a":["b", "c"]) = myFoldl f (f "z" "a") ["b", "c"]
+#              acc   x :    xs
+#
+# 2. myFoldl f "za" ("b":["c"]) = myFoldl f (f "za" "b") ["c"]
+#              acc    x : xs
+#
+# 3. myFoldl f "zab" ("c":[]) = myFoldl f (f "zab" "c") []
+#               acc    x :xs
+#
+# 4. myFoldl f "zabc" [] = "zabc"
+#               acc
 ```
