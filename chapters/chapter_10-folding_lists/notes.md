@@ -48,13 +48,14 @@ myFoldl f acc [] = acc
 myFoldl f acc (x:xs) = myFoldl f (f acc x) xs
 
 # foldl - utsetter evaluering av verdiene i ryggraden til den er ferdig med å traversere ryggraden
+# f = (++)
 # myFoldl f "z" ["a", "b", "c"]
 #
 # 1. myFoldl f "z" ("a":["b", "c"]) = myFoldl f (f "z" "a") ["b", "c"]
 #              acc   x :    xs
 #
 # 2. myFoldl f (f "z" "a") ("b":["c"]) = myFoldl f (f (f "z" "a") "b") ["c"]
-#              acc    x : xs
+#              acc    x : xsd
 #
 # 3. myFoldl f (f (f "z" "a") "b") ("c":[]) = myFoldl f (f (f (f "z" "a") "b") "c") []
 #               acc    x :xs
@@ -82,4 +83,21 @@ myFoldl f acc (x:xs) = myFoldl f (f acc x) xs
 #
 # 4. myFoldl f "zabc" [] = "zabc"
 #               acc
+```
+
+```haskell
+foldr :: (a -> b -> b) -> b -> [a] -> b
+foldr f z [] = z
+foldr f z (x:xs) = f x (myFoldr f z xs)
+
+foldr (\x b -> even x || b) False [1..]
+```
+
+```txt
+f = (\x b -> even x || b)
+z = False
+foldr (\x b -> even x || b) False [1..]
+
+foldr f z (1:[2..]) = f 1 (foldr f False [2..])
+foldr f False (2, [3..]) = f 2 (fold f False [3..])
 ```
